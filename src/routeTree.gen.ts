@@ -10,33 +10,154 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AudioRouteImport } from './routes/audio'
+import { Route as ImageRouteImport } from './routes/image'
+import { Route as JsonRouteImport } from './routes/json'
+import { Route as JwtRouteImport } from './routes/jwt'
+import { Route as MoneyRouteImport } from './routes/money'
+import { Route as RegexRouteImport } from './routes/regex'
+import { Route as SettingsRouteImport } from './routes/settings'
+import { Route as TextRouteImport } from './routes/text'
+import { Route as TimestampRouteImport } from './routes/timestamp'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AudioRoute = AudioRouteImport.update({
+  id: '/audio',
+  path: '/audio',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ImageRoute = ImageRouteImport.update({
+  id: '/image',
+  path: '/image',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const JsonRoute = JsonRouteImport.update({
+  id: '/json',
+  path: '/json',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const JwtRoute = JwtRouteImport.update({
+  id: '/jwt',
+  path: '/jwt',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MoneyRoute = MoneyRouteImport.update({
+  id: '/money',
+  path: '/money',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RegexRoute = RegexRouteImport.update({
+  id: '/regex',
+  path: '/regex',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SettingsRoute = SettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TextRoute = TextRouteImport.update({
+  id: '/text',
+  path: '/text',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TimestampRoute = TimestampRouteImport.update({
+  id: '/timestamp',
+  path: '/timestamp',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/audio': typeof AudioRoute
+  '/image': typeof ImageRoute
+  '/json': typeof JsonRoute
+  '/jwt': typeof JwtRoute
+  '/money': typeof MoneyRoute
+  '/regex': typeof RegexRoute
+  '/settings': typeof SettingsRoute
+  '/text': typeof TextRoute
+  '/timestamp': typeof TimestampRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/audio': typeof AudioRoute
+  '/image': typeof ImageRoute
+  '/json': typeof JsonRoute
+  '/jwt': typeof JwtRoute
+  '/money': typeof MoneyRoute
+  '/regex': typeof RegexRoute
+  '/settings': typeof SettingsRoute
+  '/text': typeof TextRoute
+  '/timestamp': typeof TimestampRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/audio': typeof AudioRoute
+  '/image': typeof ImageRoute
+  '/json': typeof JsonRoute
+  '/jwt': typeof JwtRoute
+  '/money': typeof MoneyRoute
+  '/regex': typeof RegexRoute
+  '/settings': typeof SettingsRoute
+  '/text': typeof TextRoute
+  '/timestamp': typeof TimestampRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/audio'
+    | '/image'
+    | '/json'
+    | '/jwt'
+    | '/money'
+    | '/regex'
+    | '/settings'
+    | '/text'
+    | '/timestamp'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/audio'
+    | '/image'
+    | '/json'
+    | '/jwt'
+    | '/money'
+    | '/regex'
+    | '/settings'
+    | '/text'
+    | '/timestamp'
+  id:
+    | '__root__'
+    | '/'
+    | '/audio'
+    | '/image'
+    | '/json'
+    | '/jwt'
+    | '/money'
+    | '/regex'
+    | '/settings'
+    | '/text'
+    | '/timestamp'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AudioRoute: typeof AudioRoute
+  ImageRoute: typeof ImageRoute
+  JsonRoute: typeof JsonRoute
+  JwtRoute: typeof JwtRoute
+  MoneyRoute: typeof MoneyRoute
+  RegexRoute: typeof RegexRoute
+  SettingsRoute: typeof SettingsRoute
+  TextRoute: typeof TextRoute
+  TimestampRoute: typeof TimestampRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +169,83 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/audio': {
+      id: '/audio'
+      path: '/audio'
+      fullPath: '/audio'
+      preLoaderRoute: typeof AudioRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/image': {
+      id: '/image'
+      path: '/image'
+      fullPath: '/image'
+      preLoaderRoute: typeof ImageRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/json': {
+      id: '/json'
+      path: '/json'
+      fullPath: '/json'
+      preLoaderRoute: typeof JsonRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/jwt': {
+      id: '/jwt'
+      path: '/jwt'
+      fullPath: '/jwt'
+      preLoaderRoute: typeof JwtRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/money': {
+      id: '/money'
+      path: '/money'
+      fullPath: '/money'
+      preLoaderRoute: typeof MoneyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/regex': {
+      id: '/regex'
+      path: '/regex'
+      fullPath: '/regex'
+      preLoaderRoute: typeof RegexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/settings': {
+      id: '/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof SettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/text': {
+      id: '/text'
+      path: '/text'
+      fullPath: '/text'
+      preLoaderRoute: typeof TextRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/timestamp': {
+      id: '/timestamp'
+      path: '/timestamp'
+      fullPath: '/timestamp'
+      preLoaderRoute: typeof TimestampRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AudioRoute: AudioRoute,
+  ImageRoute: ImageRoute,
+  JsonRoute: JsonRoute,
+  JwtRoute: JwtRoute,
+  MoneyRoute: MoneyRoute,
+  RegexRoute: RegexRoute,
+  SettingsRoute: SettingsRoute,
+  TextRoute: TextRoute,
+  TimestampRoute: TimestampRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
