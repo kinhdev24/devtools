@@ -201,21 +201,20 @@ See:
 
 Prefer:
 
--   compact spacing
--   subtle borders
--   neutral surfaces
--   clear hierarchy
--   editor-like UI
--   high information density
+-   floating card layouts with subtle depth (`shadow-sm`)
+-   very subtle borders (`border-border/40`)
+-   neutral surfaces with a global dot-grid background for depth
+-   clear hierarchy with pill-shaped or floating components (e.g., toolbars)
+-   editor-like UI with modern terminal/macOS window controls
+-   high information density but with comfortable padding
 
 Avoid:
 
--   glassmorphism
--   neon
--   large gradients
--   giant cards
+-   heavy glassmorphism
+-   neon or large gradients
+-   giant blocky cards
 -   excessive shadows
--   decorative animation
+-   distracting animation (micro-animations on hover/click are encouraged)
 
 Direction:
 

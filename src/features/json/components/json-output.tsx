@@ -7,24 +7,31 @@ type JsonOutputProps = {
 export function JsonOutput({ value }: JsonOutputProps) {
 	return (
 		<div className="flex min-h-0 flex-1 flex-col">
-			<div className="flex items-center border-b px-3 py-1.5">
-				<span className="text-xs font-medium text-muted-foreground">
+			{/* macOS / Terminal style header */}
+			<div className="flex items-center gap-2 border-b border-border/40 bg-muted/10 px-4 py-2.5">
+				<div className="flex gap-1.5 opacity-50 grayscale">
+					<div className="size-2.5 rounded-full bg-destructive/60" />
+					<div className="size-2.5 rounded-full bg-amber-500/60" />
+					<div className="size-2.5 rounded-full bg-emerald-500/60" />
+				</div>
+				<span className="ml-2 font-mono text-[10px] font-semibold tracking-wider text-muted-foreground uppercase">
 					{m.json_output_label()}
 				</span>
 			</div>
-			<div className="relative min-h-0 flex-1 overflow-auto">
+			<div className="min-h-0 flex-1 overflow-auto p-4">
 				{value ? (
 					<pre
-						id="json-output"
-						aria-label={m.json_output_label()}
-						className="h-full min-h-0 p-3 font-mono text-sm leading-relaxed text-foreground"
+						className="min-h-full font-mono text-[13px] leading-relaxed text-foreground/90 selection:bg-blue-500/30"
+						style={{ tabSize: 2 }}
 					>
-						<SyntaxHighlight source={value} />
+						<code className="block">
+							<SyntaxHighlight source={value} />
+						</code>
 					</pre>
 				) : (
-					<p className="absolute inset-0 flex items-center justify-center text-xs text-muted-foreground/50">
+					<div className="flex h-full items-center justify-center text-sm text-muted-foreground/50">
 						{m.json_empty_output()}
-					</p>
+					</div>
 				)}
 			</div>
 		</div>

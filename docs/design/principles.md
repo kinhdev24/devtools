@@ -13,22 +13,22 @@ Optimize for:
 
 ## Prefer
 
-- Flat UI
-- Compact layout
-- Neutral colors
-- Subtle borders
+- Floating Card UI (elevated surfaces)
+- Compact, clean layout
+- Neutral colors with vibrant accents for status/interactions
+- Very subtle borders (`border-border/40`) and soft shadows (`shadow-sm`)
 - Clear hierarchy
-- Functional interfaces
+- Functional interfaces with terminal/macOS window aesthetics
+- Subtle background patterns (e.g., global dot grid) to provide depth
 
 ## Avoid
 
-- Glassmorphism
-- Neon
-- Cyberpunk
+- Heavy Glassmorphism (subtle `backdrop-blur` is fine, but don't overdo it)
+- Neon or Cyberpunk styles
 - Large gradients
-- Giant cards
-- Excessive shadows
-- Decorative animations
+- Giant, blocky cards (keep them floating and light)
+- Excessive, deep shadows
+- Distracting decorative animations (micro-interactions on hover/click are encouraged)
 
 ## Direction
 

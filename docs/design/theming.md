@@ -22,6 +22,6 @@ border
 primary
 destructive
 
-Color communicates state, not decoration.
+Color communicates state and guides focus (e.g., animated status dots, syntax highlighting).
 
-Prefer borders over shadows.
+Combine subtle borders (`border-border/40`) with soft shadows (`shadow-sm`) to create floating, elevated surfaces.

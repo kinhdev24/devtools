@@ -7,12 +7,8 @@ import {
 import { Badge } from "#/components/ui/badge";
 import { Button } from "#/components/ui/button";
 import {
-	Card,
-	CardAction,
 	CardContent,
-	CardDescription,
 	CardFooter,
-	CardHeader,
 	CardTitle,
 } from "#/components/ui/card";
 import {
@@ -20,10 +16,8 @@ import {
 	EmptyContent,
 	EmptyDescription,
 	EmptyHeader,
-	EmptyMedia,
 	EmptyTitle,
 } from "#/components/ui/empty";
-import { Separator } from "#/components/ui/separator";
 import type { ToolDefinition } from "#/config/tools";
 import { getToolDescription, getToolName } from "#/lib/tool-messages";
 import * as m from "#/paraglide/messages.js";
@@ -35,92 +29,81 @@ type ComingSoonPageProps = {
 	>;
 };
 
-const buildSteps = [
-	m.coming_plan_input,
-	m.coming_plan_engine,
-	m.coming_plan_output,
-];
 
 export function ComingSoonPage({ item }: ComingSoonPageProps) {
 	const Icon = item.icon;
 	const name = getToolName(item.nameKey);
 
 	return (
-		<Empty className="min-h-full rounded-none border-0 px-4 py-12 sm:px-8 lg:py-16">
-			<EmptyHeader className="max-w-lg gap-3">
-				<EmptyMedia
-					variant="icon"
-					className="size-12 border bg-background shadow-xs"
-				>
-					<Icon aria-hidden="true" />
-				</EmptyMedia>
-				<Badge variant="outline" className="font-mono uppercase tracking-wider">
-					<CircleDotDashedIcon data-icon="inline-start" aria-hidden="true" />
-					{m.coming_status()}
-				</Badge>
-				<EmptyTitle className="text-2xl sm:text-3xl">
-					{m.coming_title({ tool: name })}
-				</EmptyTitle>
-				<EmptyDescription className="max-w-md">
-					{getToolDescription(item.descriptionKey)}. {m.coming_description()}
-				</EmptyDescription>
-			</EmptyHeader>
+		<div className="relative flex h-full flex-col items-center justify-center px-4 overflow-hidden">
+			{/* Decorative background glow */}
+			<div className="absolute top-1/2 left-1/2 -z-10 h-[400px] w-[400px] -translate-x-1/2 -translate-y-1/2 opacity-20 dark:opacity-30 blur-[100px]" style={{
+				background: 'radial-gradient(circle, hsl(var(--primary)) 0%, transparent 70%)'
+			}} />
 
-			<EmptyContent className="max-w-xl">
-				<Card className="w-full gap-0 overflow-hidden py-0 text-left">
-					<CardHeader className="border-b bg-muted/35 py-4">
-						<CardTitle className="font-mono text-xs font-medium tracking-wide">
-							build://{item.id}
-						</CardTitle>
-						<CardDescription>{m.coming_plan_title()}</CardDescription>
-						<CardAction>
-							<Badge variant="secondary" className="font-mono">
+			<Empty className="relative z-10 w-full max-w-2xl border-0 bg-transparent shadow-none">
+				<EmptyHeader className="max-w-md gap-4 mx-auto">
+					<div className="flex size-14 items-center justify-center rounded-2xl border border-border/40 bg-card/60 shadow-md backdrop-blur-xl">
+						<Icon className="size-7 text-primary" aria-hidden="true" />
+					</div>
+					<Badge variant="outline" className="font-mono uppercase tracking-widest bg-background/50 backdrop-blur-md shadow-sm border-border/40 py-1 px-3">
+						<CircleDotDashedIcon className="mr-2 size-3.5 text-primary animate-pulse" aria-hidden="true" />
+						{m.coming_status()}
+					</Badge>
+					<EmptyTitle className="text-2xl font-bold tracking-tight text-balance">
+						{m.coming_title({ tool: name })}
+					</EmptyTitle>
+					<EmptyDescription className="text-sm leading-relaxed text-balance text-muted-foreground/80">
+						{getToolDescription(item.descriptionKey)}.
+					</EmptyDescription>
+				</EmptyHeader>
+
+				<EmptyContent className="mt-8 w-full max-w-[420px] mx-auto">
+					<div className="flex w-full flex-col overflow-hidden rounded-2xl border border-border/40 bg-card/60 shadow-lg backdrop-blur-xl text-left">
+						{/* Terminal Header */}
+						<div className="flex items-center gap-2 border-b border-border/40 bg-muted/20 px-4 py-3">
+							<div className="flex gap-1.5">
+								<div className="size-2.5 rounded-full bg-destructive/80" />
+								<div className="size-2.5 rounded-full bg-amber-500/80" />
+								<div className="size-2.5 rounded-full bg-emerald-500/80" />
+							</div>
+							<CardTitle className="ml-2 font-mono text-[10px] font-medium tracking-widest text-muted-foreground uppercase">
+								build://{item.id}
+							</CardTitle>
+							<Badge variant="secondary" className="ml-auto font-mono text-[9px] bg-primary/10 text-primary border-0 px-2 py-0.5">
 								{m.coming_queued()}
 							</Badge>
-						</CardAction>
-					</CardHeader>
-					<CardContent className="space-y-5 py-5">
-						<div className="grid grid-cols-[auto_1fr] gap-x-6 gap-y-2 text-xs">
-							<span className="text-muted-foreground">
-								{m.coming_route_label()}
-							</span>
-							<code className="justify-self-end font-mono text-foreground">
-								{item.path}
-							</code>
-							<span className="text-muted-foreground">
-								{m.coming_runtime_label()}
-							</span>
-							<span className="justify-self-end font-mono">
-								{m.coming_runtime_value()}
-							</span>
 						</div>
-						<Separator />
-						<ol className="space-y-3">
-							{buildSteps.map((step, index) => (
-								<li key={step()} className="flex items-center gap-3 text-sm">
-									<span className="flex size-6 shrink-0 items-center justify-center rounded-md border bg-muted/40 font-mono text-[10px] text-muted-foreground">
-										{String(index + 1).padStart(2, "0")}
-									</span>
-									<span>{step()}</span>
-									<span
-										className="ml-auto size-1.5 rounded-full bg-muted-foreground/35"
-										aria-hidden="true"
-									/>
-								</li>
-							))}
-						</ol>
-					</CardContent>
-					<CardFooter className="border-t py-4">
-						<Button asChild variant="ghost" size="sm" className="-ml-3">
-							<Link to="/">
-								<ArrowLeftIcon aria-hidden="true" />
-								{m.coming_back_home()}
-							</Link>
-						</Button>
-					</CardFooter>
-				</Card>
-			</EmptyContent>
-		</Empty>
+
+						<CardContent className="p-5">
+							<div className="grid grid-cols-[auto_1fr] gap-x-6 gap-y-3 text-sm">
+								<span className="text-muted-foreground font-medium uppercase tracking-wider text-[10px] pt-1">
+									{m.coming_route_label()}
+								</span>
+								<code className="justify-self-end font-mono text-primary bg-primary/10 px-2 py-0.5 rounded text-xs">
+									{item.path}
+								</code>
+								<span className="text-muted-foreground font-medium uppercase tracking-wider text-[10px] pt-0.5">
+									{m.coming_runtime_label()}
+								</span>
+								<span className="justify-self-end font-mono text-foreground text-xs">
+									{m.coming_runtime_value()}
+								</span>
+							</div>
+						</CardContent>
+
+						<CardFooter className="border-t border-border/40 bg-muted/10 p-4">
+							<Button asChild variant="ghost" size="sm" className="rounded-full hover:bg-muted/50 w-full">
+								<Link to="/">
+									<ArrowLeftIcon className="mr-2 size-3.5" aria-hidden="true" />
+									{m.coming_back_home()}
+								</Link>
+							</Button>
+						</CardFooter>
+					</div>
+				</EmptyContent>
+			</Empty>
+		</div>
 	);
 }
 

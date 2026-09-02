@@ -47,6 +47,18 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 		<html lang={getLocale()}>
 			<head>
 				<HeadContent />
+				<script
+					dangerouslySetInnerHTML={{
+						__html: `
+							try {
+								const savedTheme = window.localStorage.getItem("devtools-theme");
+								const isDark = savedTheme === "dark" || (savedTheme === null && window.matchMedia("(prefers-color-scheme: dark)").matches);
+								if (isDark) document.documentElement.classList.add("dark");
+							} catch (e) {}
+						`,
+					}}
+					suppressHydrationWarning
+				/>
 			</head>
 			<body>
 				<TooltipProvider delayDuration={300}>

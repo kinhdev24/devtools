@@ -58,10 +58,12 @@ export function CommandPalette({
 								value={[getToolName(tool.nameKey), ...tool.aliases].join(" ")}
 								onSelect={() => select(tool.path)}
 							>
-								<Icon />
-								<div className="flex min-w-0 flex-col">
-									<span>{getToolName(tool.nameKey)}</span>
-									<span className="truncate text-xs text-muted-foreground">
+								<div className="flex size-7 shrink-0 items-center justify-center rounded-md border border-border/40 bg-background/50 shadow-sm">
+									<Icon className="size-4" />
+								</div>
+								<div className="flex min-w-0 flex-col gap-0.5">
+									<span className="font-medium text-foreground">{getToolName(tool.nameKey)}</span>
+									<span className="truncate text-[11px] text-muted-foreground/80">
 										{getToolDescription(tool.descriptionKey)}
 									</span>
 								</div>

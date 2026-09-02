@@ -1,9 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { toolsById } from "#/config/tools";
-import { ComingSoonPage } from "#/features/coming-soon/page";
+import { z } from "zod";
+import { JwtPage } from "#/features/jwt/page";
 
-export const Route = createFileRoute("/jwt")({ component: JwtPage });
+const jwtSearchSchema = z.object({
+	token: z.string().optional(),
+});
 
-function JwtPage() {
-	return <ComingSoonPage item={toolsById.jwt} />;
-}
+export const Route = createFileRoute("/jwt")({
+	validateSearch: (search) => jwtSearchSchema.parse(search),
+	component: JwtPage,
+});

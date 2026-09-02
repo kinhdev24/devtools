@@ -60,28 +60,38 @@ export function JsonPage() {
 	}, []);
 
 	return (
-		<div className="flex h-full flex-col overflow-hidden">
-			{/* Toolbar */}
-			<JsonToolbar
-				status={status}
-				errorMessage={errorMessage}
-				output={output}
-				onFormat={handleFormat}
-				onMinify={handleMinify}
-				onClear={handleClear}
-				currentMode={mode}
-			/>
-
-			{/* Editor panels */}
-			<div className="flex min-h-0 flex-1 divide-x overflow-hidden">
-				{/* Input panel */}
-				<div className="flex min-h-0 min-w-0 flex-1 flex-col overflow-auto bg-background">
-					<JsonInput value={input} status={status} onChange={setInput} />
+		<div className="relative flex h-full flex-col overflow-y-auto">
+			<div className="mx-auto flex w-full max-w-7xl flex-1 flex-col gap-6 p-4 sm:p-6 lg:p-8">
+				{/* Floating Toolbar */}
+				<div className="sticky top-0 z-10 -mx-2 px-2 py-2">
+					<JsonToolbar
+						status={status}
+						errorMessage={errorMessage}
+						output={output}
+						onFormat={handleFormat}
+						onMinify={handleMinify}
+						onClear={handleClear}
+						currentMode={mode}
+					/>
 				</div>
 
-				{/* Output panel */}
-				<div className="flex min-h-0 min-w-0 flex-1 flex-col overflow-auto bg-muted/20">
-					<JsonOutput value={output} />
+				{/* Editor Cards */}
+				<div className="flex flex-1 flex-col gap-6 lg:flex-row lg:min-h-[500px]">
+					{/* Input panel */}
+					<div className="flex min-h-[300px] flex-1 flex-col overflow-hidden rounded-xl border border-border/40 bg-card/60 shadow-sm backdrop-blur-sm transition-shadow focus-within:ring-1 focus-within:ring-ring lg:min-h-0">
+						<JsonInput
+							value={input}
+							status={status}
+							errorLine={!parseResult.ok ? parseResult.line : undefined}
+							errorColumn={!parseResult.ok ? parseResult.column : undefined}
+							onChange={setInput}
+						/>
+					</div>
+
+					{/* Output panel */}
+					<div className="flex min-h-[300px] flex-1 flex-col overflow-hidden rounded-xl border border-border/40 bg-card/60 shadow-sm backdrop-blur-sm transition-shadow focus-within:ring-1 focus-within:ring-ring lg:min-h-0">
+						<JsonOutput value={output} />
+					</div>
 				</div>
 			</div>
 		</div>

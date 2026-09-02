@@ -1,0 +1,200 @@
+import { CheckIcon, ClipboardIcon } from "lucide-react";
+import { useState } from "react";
+import { Button } from "#/components/ui/button";
+import * as m from "#/paraglide/messages.js";
+import { formatRelative, formatTimestamp } from "../utils/jwt";
+
+/** Standard claim annotations — maps claim key → label getter */
+const CLAIM_LABELS: Record<string, () => string> = {
+	sub: m.jwt_claim_sub,
+	iss: m.jwt_claim_iss,
+	aud: m.jwt_claim_aud,
+	exp: m.jwt_claim_exp,
+	iat: m.jwt_claim_iat,
+	nbf: m.jwt_claim_nbf,
+	jti: m.jwt_claim_jti,
+};
+
+/** Claims whose values are Unix timestamps */
+const TIMESTAMP_CLAIMS = new Set(["exp", "iat", "nbf"]);
+
+type JwtDecodedProps = {
+	header: Record<string, unknown>;
+	payload: Record<string, unknown>;
+	now: number;
+};
+
+export function JwtDecoded({ header, payload, now }: JwtDecodedProps) {
+	return (
+		<div className="grid gap-3 sm:grid-cols-[1fr_1.6fr]">
+			<ClaimsSection
+				title={m.jwt_section_header()}
+				claims={header}
+				now={now}
+				showAnnotations={false}
+			/>
+			<ClaimsSection
+				title={m.jwt_section_payload()}
+				claims={payload}
+				now={now}
+				showAnnotations
+			/>
+		</div>
+	);
+}
+
+// ---------------------------------------------------------------------------
+// ClaimsSection
+// ---------------------------------------------------------------------------
+
+function ClaimsSection({
+	title,
+	claims,
+	now,
+	showAnnotations,
+}: {
+	title: string;
+	claims: Record<string, unknown>;
+	now: number;
+	showAnnotations: boolean;
+}) {
+	const entries = Object.entries(claims);
+
+	return (
+		<div className="flex h-full flex-col overflow-hidden rounded-xl border border-border/40 bg-card/60 shadow-sm backdrop-blur-sm">
+			{/* Terminal style header */}
+			<div className="flex items-center gap-2 border-b border-border/40 bg-muted/20 px-4 py-2.5">
+				<div className="flex gap-1.5 opacity-50 grayscale transition-all hover:grayscale-0">
+					<div className="size-2.5 rounded-full bg-destructive/60" />
+					<div className="size-2.5 rounded-full bg-amber-500/60" />
+					<div className="size-2.5 rounded-full bg-emerald-500/60" />
+				</div>
+				<span className="ml-2 font-mono text-[10px] font-semibold tracking-wider text-muted-foreground uppercase">
+					{title}
+				</span>
+				<div className="ml-auto flex items-center gap-1.5">
+					<span className="font-mono text-[10px] font-medium text-muted-foreground/70">
+						{entries.length} items
+					</span>
+				</div>
+			</div>
+
+			{/* Claims */}
+			<div className="flex flex-col gap-1 p-2">
+				{entries.length === 0 ? (
+					<div className="flex py-6 justify-center items-center text-xs text-muted-foreground italic">
+						Empty
+					</div>
+				) : (
+					entries.map(([key, value]) => (
+						<ClaimRow
+							key={key}
+							claimKey={key}
+							value={value}
+							now={now}
+							showAnnotation={showAnnotations}
+						/>
+					))
+				)}
+			</div>
+		</div>
+	);
+}
+
+// ---------------------------------------------------------------------------
+// ClaimRow
+// ---------------------------------------------------------------------------
+
+function ClaimRow({
+	claimKey,
+	value,
+	now,
+	showAnnotation,
+}: {
+	claimKey: string;
+	value: unknown;
+	now: number;
+	showAnnotation: boolean;
+}) {
+	const [copied, setCopied] = useState(false);
+	const annotation = showAnnotation ? CLAIM_LABELS[claimKey]?.() : undefined;
+	const isTimestamp =
+		TIMESTAMP_CLAIMS.has(claimKey) && typeof value === "number";
+
+	const displayValue = isTimestamp
+		? formatTimestamp(value as number)
+		: formatClaimValue(value);
+
+	const copyValue = isTimestamp
+		? String(value)
+		: typeof value === "string"
+			? value
+			: JSON.stringify(value);
+
+	async function handleCopy() {
+		await navigator.clipboard.writeText(copyValue);
+		setCopied(true);
+		setTimeout(() => setCopied(false), 1500);
+	}
+
+	return (
+		<div className="group relative flex items-start justify-between gap-3 rounded-md px-3 py-2.5 transition-colors hover:bg-muted/50">
+			<div className="flex min-w-0 flex-1 flex-col gap-1">
+				<div className="flex items-center gap-2">
+					{/* Key */}
+					<span
+						className="min-w-[2.5rem] shrink-0 font-mono text-[11.5px] font-medium"
+						style={{ color: "var(--json-key)" }}
+					>
+						{claimKey}
+					</span>
+					
+					{/* Meta / Annotation */}
+					{isTimestamp && (
+						<span className="flex items-center gap-1 rounded bg-muted/50 px-1.5 py-0.5 font-mono text-[9px] text-muted-foreground uppercase tracking-wide">
+							{formatRelative(value as number, now)}
+						</span>
+					)}
+					{annotation && !isTimestamp && (
+						<span className="rounded bg-muted/50 px-1.5 py-0.5 font-mono text-[9px] text-muted-foreground uppercase tracking-wide">
+							{annotation}
+						</span>
+					)}
+				</div>
+
+				{/* Value */}
+				<span className="break-all font-mono text-[12.5px] leading-relaxed text-foreground/90 selection:bg-blue-500/30">
+					{displayValue}
+				</span>
+			</div>
+
+			{/* Copy button */}
+			<Button
+				size="icon-xs"
+				variant="ghost"
+				onClick={handleCopy}
+				title={m.jwt_copy_value()}
+				className="mt-1 shrink-0 opacity-0 transition-opacity group-hover:opacity-100 text-muted-foreground hover:text-foreground"
+			>
+				{copied ? (
+					<CheckIcon className="size-3.5 text-emerald-500" aria-hidden="true" />
+				) : (
+					<ClipboardIcon className="size-3.5" aria-hidden="true" />
+				)}
+			</Button>
+		</div>
+	);
+}
+
+// ---------------------------------------------------------------------------
+// Helpers
+// ---------------------------------------------------------------------------
+
+function formatClaimValue(value: unknown): string {
+	if (value === null) return "null";
+	if (typeof value === "string") return `"${value}"`;
+	if (typeof value === "boolean" || typeof value === "number")
+		return String(value);
+	if (Array.isArray(value)) return JSON.stringify(value);
+	return JSON.stringify(value, null, 2);
+}

@@ -33,8 +33,9 @@ export function ThemeToggle() {
 			size="icon-sm"
 			onClick={toggleTheme}
 			aria-label={isDark ? m.theme_light() : m.theme_dark()}
+			className="rounded-full hover:bg-muted/50"
 		>
-			{isDark ? <SunIcon /> : <MoonIcon />}
+			{isDark ? <SunIcon className="size-4" /> : <MoonIcon className="size-4" />}
 		</Button>
 	);
 }
