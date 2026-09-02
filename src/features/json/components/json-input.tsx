@@ -33,18 +33,6 @@ export function JsonInput({
 
 	return (
 		<div className="flex min-h-0 flex-1 flex-col">
-			{/* macOS / Terminal style header */}
-			<div className="flex items-center gap-2 border-b border-border/40 bg-muted/20 px-4 py-2.5">
-				<div className="flex gap-1.5">
-					<div className="size-2.5 rounded-full bg-destructive/60" />
-					<div className="size-2.5 rounded-full bg-amber-500/60" />
-					<div className="size-2.5 rounded-full bg-emerald-500/60" />
-				</div>
-				<span className="ml-2 font-mono text-[10px] font-semibold tracking-wider text-muted-foreground uppercase">
-					{m.json_input_label()}
-				</span>
-			</div>
-			
 			<div className="relative min-h-0 flex-1 overflow-hidden bg-transparent">
 				{/* Backdrop for highlights */}
 				<div
@@ -55,10 +43,11 @@ export function JsonInput({
 				>
 					{lines.map((line, i) => {
 						const isErrorLine = status === "invalid" && errorLine === i + 1;
+						const lineKey = `line-${i}`;
 						if (isErrorLine) {
 							return (
 								<div
-									key={i}
+									key={lineKey}
 									className="relative -mx-4 px-4 w-[calc(100%+2rem)] min-w-max bg-destructive/15 text-transparent"
 								>
 									{line || " "}
@@ -75,7 +64,7 @@ export function JsonInput({
 								</div>
 							);
 						}
-						return <div key={i}>{line || " "}</div>;
+						return <div key={lineKey}>{line || " "}</div>;
 					})}
 				</div>
 

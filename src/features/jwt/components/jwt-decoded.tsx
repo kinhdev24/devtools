@@ -1,5 +1,10 @@
 import { CheckIcon, ClipboardIcon } from "lucide-react";
 import { useState } from "react";
+import {
+	ToolWindow,
+	ToolWindowHeader,
+	ToolWindowToolbar,
+} from "#/components/layout/tool-window";
 import { Button } from "#/components/ui/button";
 import * as m from "#/paraglide/messages.js";
 import { formatRelative, formatTimestamp } from "../utils/jwt";
@@ -61,23 +66,14 @@ function ClaimsSection({
 	const entries = Object.entries(claims);
 
 	return (
-		<div className="flex h-full flex-col overflow-hidden rounded-xl border border-border/40 bg-card/60 shadow-sm backdrop-blur-sm">
-			{/* Terminal style header */}
-			<div className="flex items-center gap-2 border-b border-border/40 bg-muted/20 px-4 py-2.5">
-				<div className="flex gap-1.5 opacity-50 grayscale transition-all hover:grayscale-0">
-					<div className="size-2.5 rounded-full bg-destructive/60" />
-					<div className="size-2.5 rounded-full bg-amber-500/60" />
-					<div className="size-2.5 rounded-full bg-emerald-500/60" />
-				</div>
-				<span className="ml-2 font-mono text-[10px] font-semibold tracking-wider text-muted-foreground uppercase">
-					{title}
-				</span>
-				<div className="ml-auto flex items-center gap-1.5">
+		<ToolWindow className="h-full">
+			<ToolWindowHeader title={title}>
+				<ToolWindowToolbar>
 					<span className="font-mono text-[10px] font-medium text-muted-foreground/70">
 						{entries.length} items
 					</span>
-				</div>
-			</div>
+				</ToolWindowToolbar>
+			</ToolWindowHeader>
 
 			{/* Claims */}
 			<div className="flex flex-col gap-1 p-2">
@@ -97,7 +93,7 @@ function ClaimsSection({
 					))
 				)}
 			</div>
-		</div>
+		</ToolWindow>
 	);
 }
 
@@ -148,7 +144,7 @@ function ClaimRow({
 					>
 						{claimKey}
 					</span>
-					
+
 					{/* Meta / Annotation */}
 					{isTimestamp && (
 						<span className="flex items-center gap-1 rounded bg-muted/50 px-1.5 py-0.5 font-mono text-[9px] text-muted-foreground uppercase tracking-wide">

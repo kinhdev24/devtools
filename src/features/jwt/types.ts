@@ -24,4 +24,9 @@ export type JwtDecodeResult =
 			error: "invalid_format" | "invalid_header" | "invalid_payload";
 	  };
 
-export type VerifyStatus = "idle" | "valid" | "invalid" | "unsupported" | "checking";
+export type VerifyStatus =
+	| "idle"
+	| "valid"
+	| "invalid"
+	| "unsupported"
+	| "checking";

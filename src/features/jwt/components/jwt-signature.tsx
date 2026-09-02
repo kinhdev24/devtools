@@ -5,10 +5,15 @@ import {
 	ShieldIcon,
 } from "lucide-react";
 import { useCallback, useState } from "react";
+import {
+	ToolWindow,
+	ToolWindowHeader,
+	ToolWindowToolbar,
+} from "#/components/layout/tool-window";
 import { Button } from "#/components/ui/button";
 import * as m from "#/paraglide/messages.js";
-import { verifyHmac } from "../utils/jwt";
 import type { VerifyStatus } from "../types";
+import { verifyHmac } from "../utils/jwt";
 
 const HMAC_ALGS = new Set(["HS256", "HS384", "HS512"]);
 
@@ -30,21 +35,14 @@ export function JwtSignature({ token, alg }: JwtSignatureProps) {
 	}, [token, secret, alg]);
 
 	return (
-		<div className="flex flex-col overflow-hidden rounded-xl border border-border/40 bg-card/60 shadow-sm backdrop-blur-sm">
-			{/* Terminal style header */}
-			<div className="flex items-center gap-2 border-b border-border/40 bg-muted/20 px-4 py-2.5">
-				<div className="flex gap-1.5 opacity-50 grayscale transition-all hover:grayscale-0">
-					<div className="size-2.5 rounded-full bg-destructive/60" />
-					<div className="size-2.5 rounded-full bg-amber-500/60" />
-					<div className="size-2.5 rounded-full bg-emerald-500/60" />
-				</div>
-				<span className="ml-2 font-mono text-[10px] font-semibold tracking-wider text-muted-foreground uppercase">
-					{m.jwt_section_signature()}
-				</span>
-				<span className="ml-auto font-mono text-[10px] text-muted-foreground">
-					{alg || "—"}
-				</span>
-			</div>
+		<ToolWindow>
+			<ToolWindowHeader title={m.jwt_section_signature()}>
+				<ToolWindowToolbar>
+					<span className="font-mono text-[10px] text-muted-foreground">
+						{alg || "—"}
+					</span>
+				</ToolWindowToolbar>
+			</ToolWindowHeader>
 
 			<div className="px-4 py-4">
 				{isHmac ? (
@@ -95,7 +93,7 @@ export function JwtSignature({ token, alg }: JwtSignatureProps) {
 					</div>
 				)}
 			</div>
-		</div>
+		</ToolWindow>
 	);
 }
 

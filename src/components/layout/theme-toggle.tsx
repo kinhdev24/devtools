@@ -35,7 +35,11 @@ export function ThemeToggle() {
 			aria-label={isDark ? m.theme_light() : m.theme_dark()}
 			className="rounded-full hover:bg-muted/50"
 		>
-			{isDark ? <SunIcon className="size-4" /> : <MoonIcon className="size-4" />}
+			{isDark ? (
+				<SunIcon className="size-4" />
+			) : (
+				<MoonIcon className="size-4" />
+			)}
 		</Button>
 	);
 }

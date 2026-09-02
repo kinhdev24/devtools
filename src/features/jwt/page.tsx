@@ -1,13 +1,14 @@
-import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
-import { Route } from "#/routes/jwt";
+import { useEffect, useMemo, useState } from "react";
+import { ToolWindow } from "#/components/layout/tool-window";
 import * as m from "#/paraglide/messages.js";
+import { Route } from "#/routes/jwt";
+import { JwtDecoded } from "./components/jwt-decoded";
+import { JwtInput } from "./components/jwt-input";
+import { JwtSignature } from "./components/jwt-signature";
+import { JwtTimeline } from "./components/jwt-timeline";
 import type { JwtStatus } from "./types";
 import { decodeJwt, getTokenStatus } from "./utils/jwt";
-import { JwtInput } from "./components/jwt-input";
-import { JwtDecoded } from "./components/jwt-decoded";
-import { JwtTimeline } from "./components/jwt-timeline";
-import { JwtSignature } from "./components/jwt-signature";
 
 export function JwtPage() {
 	const { token: initialToken } = Route.useSearch();
@@ -20,8 +21,7 @@ export function JwtPage() {
 		if (initialToken) {
 			navigate({ to: "/jwt", search: {}, replace: true });
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+	}, [initialToken, navigate]);
 
 	// Live clock — only ticks when we have a token with time-based claims
 	const decodeResult = useMemo(
@@ -32,17 +32,12 @@ export function JwtPage() {
 	const hasTimeClaims = useMemo(() => {
 		if (!decodeResult?.ok) return false;
 		const { payload } = decodeResult.parts;
-		return (
-			typeof payload.exp === "number" || typeof payload.nbf === "number"
-		);
+		return typeof payload.exp === "number" || typeof payload.nbf === "number";
 	}, [decodeResult]);
 
 	useEffect(() => {
 		if (!hasTimeClaims) return;
-		const id = setInterval(
-			() => setNow(Math.floor(Date.now() / 1000)),
-			1000,
-		);
+		const id = setInterval(() => setNow(Math.floor(Date.now() / 1000)), 1000);
 		return () => clearInterval(id);
 	}, [hasTimeClaims]);
 
@@ -85,9 +80,9 @@ export function JwtPage() {
 				</div>
 
 				{/* Input Card */}
-				<div className="flex flex-col overflow-hidden rounded-xl border border-border/40 bg-card/60 shadow-sm backdrop-blur-sm transition-shadow focus-within:ring-1 focus-within:ring-ring">
+				<ToolWindow>
 					<JwtInput value={token} onChange={setToken} onClear={handleClear} />
-				</div>
+				</ToolWindow>
 
 				{/* Decoded sections */}
 				{decodeResult?.ok && (
@@ -106,18 +101,18 @@ export function JwtPage() {
 										? decodeResult.parts.payload.iat
 										: undefined
 								}
-									nbf={
-										typeof decodeResult.parts.payload.nbf === "number"
-											? decodeResult.parts.payload.nbf
-											: undefined
-									}
-									exp={
-										typeof decodeResult.parts.payload.exp === "number"
-											? decodeResult.parts.payload.exp
-											: undefined
-									}
-									now={now}
-								/>
+								nbf={
+									typeof decodeResult.parts.payload.nbf === "number"
+										? decodeResult.parts.payload.nbf
+										: undefined
+								}
+								exp={
+									typeof decodeResult.parts.payload.exp === "number"
+										? decodeResult.parts.payload.exp
+										: undefined
+								}
+								now={now}
+							/>
 						)}
 
 						<JwtSignature
@@ -175,11 +170,17 @@ function StatusBadge({ status }: { status: JwtStatus }) {
 	const { label, dot, color, pulsing } = config[status];
 
 	return (
-		<div className={`flex items-center gap-1.5 font-mono text-[10px] font-semibold tracking-wider uppercase ${color}`}>
+		<div
+			className={`flex items-center gap-1.5 font-mono text-[10px] font-semibold tracking-wider uppercase ${color}`}
+		>
 			{pulsing ? (
 				<div className="relative flex size-1.5 items-center justify-center">
-					<span className={`absolute inline-flex h-full w-full animate-ping rounded-full opacity-75 ${dot.replace('500', '400')}`} />
-					<span className={`relative inline-flex size-1.5 rounded-full ${dot}`} />
+					<span
+						className={`absolute inline-flex h-full w-full animate-ping rounded-full opacity-75 ${dot.replace("500", "400")}`}
+					/>
+					<span
+						className={`relative inline-flex size-1.5 rounded-full ${dot}`}
+					/>
 				</div>
 			) : (
 				<span className={`size-1.5 rounded-full ${dot}`} aria-hidden="true" />

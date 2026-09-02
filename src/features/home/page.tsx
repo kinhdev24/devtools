@@ -1,3 +1,4 @@
+import { Link } from "@tanstack/react-router";
 import {
 	ArrowRightIcon,
 	FileUpIcon,
@@ -5,7 +6,6 @@ import {
 	SparklesIcon,
 } from "lucide-react";
 import { type DragEvent, useId, useMemo, useState } from "react";
-import { Link } from "@tanstack/react-router";
 
 import { Button } from "#/components/ui/button";
 import { Textarea } from "#/components/ui/textarea";
@@ -52,14 +52,21 @@ export function HomePage() {
 	return (
 		<div className="mx-auto flex w-full max-w-5xl flex-col gap-10 px-5 py-10 sm:px-8 md:py-14 lg:px-12 relative">
 			{/* Decorative background glow for the hero section */}
-			<div className="absolute top-0 left-1/2 -z-10 h-[400px] w-[800px] -translate-x-1/2 opacity-20 dark:opacity-30 blur-[120px]" style={{
-				background: 'radial-gradient(circle, hsl(var(--primary)) 0%, transparent 70%)'
-			}} />
+			<div
+				className="absolute top-0 left-1/2 -z-10 h-[400px] w-[800px] -translate-x-1/2 opacity-20 dark:opacity-30 blur-[120px]"
+				style={{
+					background:
+						"radial-gradient(circle, hsl(var(--primary)) 0%, transparent 70%)",
+				}}
+			/>
 
 			<section className="mx-auto flex w-full max-w-2xl flex-col gap-8">
 				<div className="flex flex-col gap-3 text-center items-center">
 					<div className="inline-flex items-center gap-2 rounded-full border border-border/40 bg-background/50 px-3 py-1 text-[11px] font-semibold tracking-widest text-muted-foreground uppercase backdrop-blur-md shadow-sm">
-						<SparklesIcon className="size-3.5 text-primary" aria-hidden="true" />
+						<SparklesIcon
+							className="size-3.5 text-primary"
+							aria-hidden="true"
+						/>
 						{m.home_eyebrow()}
 					</div>
 					<h1 className="text-balance text-3xl font-bold tracking-tight sm:text-4xl">
@@ -97,20 +104,30 @@ export function HomePage() {
 										})}
 									</span>
 								</span>
-								<Button size="sm" className="h-8 rounded-full px-4 text-xs shadow-xs" asChild>
+								<Button
+									size="sm"
+									className="h-8 rounded-full px-4 text-xs shadow-xs"
+									asChild
+								>
 									{detectedTool.id === "json" ? (
 										<Link to="/json" search={{ input: value }}>
-											{m.home_open_tool({ tool: getToolName(detectedTool.nameKey) })}
+											{m.home_open_tool({
+												tool: getToolName(detectedTool.nameKey),
+											})}
 											<ArrowRightIcon className="ml-1.5 size-3.5" />
 										</Link>
 									) : detectedTool.id === "jwt" ? (
 										<Link to="/jwt" search={{ token: value }}>
-											{m.home_open_tool({ tool: getToolName(detectedTool.nameKey) })}
+											{m.home_open_tool({
+												tool: getToolName(detectedTool.nameKey),
+											})}
 											<ArrowRightIcon className="ml-1.5 size-3.5" />
 										</Link>
 									) : (
 										<a href={detectedTool.path}>
-											{m.home_open_tool({ tool: getToolName(detectedTool.nameKey) })}
+											{m.home_open_tool({
+												tool: getToolName(detectedTool.nameKey),
+											})}
 											<ArrowRightIcon className="ml-1.5 size-3.5" />
 										</a>
 									)}
@@ -149,10 +166,16 @@ export function HomePage() {
 				</label>
 			</section>
 
-			<section aria-labelledby="recent-heading" className="flex flex-col gap-4 mt-4">
+			<section
+				aria-labelledby="recent-heading"
+				className="flex flex-col gap-4 mt-4"
+			>
 				<div className="flex items-end justify-between gap-4 border-b border-border/40 pb-3">
 					<div className="flex flex-col gap-1.5">
-						<h2 id="recent-heading" className="text-sm font-semibold tracking-tight">
+						<h2
+							id="recent-heading"
+							className="text-sm font-semibold tracking-tight"
+						>
 							{m.home_recent()}
 						</h2>
 						<p className="text-xs text-muted-foreground">
@@ -192,10 +215,7 @@ export function HomePage() {
 			</section>
 
 			<p className="flex items-center justify-center gap-2 mt-8 text-[11px] font-medium tracking-wide text-muted-foreground/60 uppercase">
-				<LockKeyholeIcon
-					className="size-3.5 shrink-0"
-					aria-hidden="true"
-				/>
+				<LockKeyholeIcon className="size-3.5 shrink-0" aria-hidden="true" />
 				{m.home_local_note()}
 			</p>
 		</div>

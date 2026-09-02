@@ -62,7 +62,9 @@ export function CommandPalette({
 									<Icon className="size-4" />
 								</div>
 								<div className="flex min-w-0 flex-col gap-0.5">
-									<span className="font-medium text-foreground">{getToolName(tool.nameKey)}</span>
+									<span className="font-medium text-foreground">
+										{getToolName(tool.nameKey)}
+									</span>
 									<span className="truncate text-[11px] text-muted-foreground/80">
 										{getToolDescription(tool.descriptionKey)}
 									</span>

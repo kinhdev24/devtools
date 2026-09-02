@@ -4,13 +4,14 @@ import {
 	CircleDotDashedIcon,
 	Settings2Icon,
 } from "lucide-react";
+import {
+	ToolWindow,
+	ToolWindowHeader,
+	ToolWindowToolbar,
+} from "#/components/layout/tool-window";
 import { Badge } from "#/components/ui/badge";
 import { Button } from "#/components/ui/button";
-import {
-	CardContent,
-	CardFooter,
-	CardTitle,
-} from "#/components/ui/card";
+import { CardContent, CardFooter } from "#/components/ui/card";
 import {
 	Empty,
 	EmptyContent,
@@ -29,7 +30,6 @@ type ComingSoonPageProps = {
 	>;
 };
 
-
 export function ComingSoonPage({ item }: ComingSoonPageProps) {
 	const Icon = item.icon;
 	const name = getToolName(item.nameKey);
@@ -37,17 +37,27 @@ export function ComingSoonPage({ item }: ComingSoonPageProps) {
 	return (
 		<div className="relative flex h-full flex-col items-center justify-center px-4 overflow-hidden">
 			{/* Decorative background glow */}
-			<div className="absolute top-1/2 left-1/2 -z-10 h-[400px] w-[400px] -translate-x-1/2 -translate-y-1/2 opacity-20 dark:opacity-30 blur-[100px]" style={{
-				background: 'radial-gradient(circle, hsl(var(--primary)) 0%, transparent 70%)'
-			}} />
+			<div
+				className="absolute top-1/2 left-1/2 -z-10 h-[400px] w-[400px] -translate-x-1/2 -translate-y-1/2 opacity-20 dark:opacity-30 blur-[100px]"
+				style={{
+					background:
+						"radial-gradient(circle, hsl(var(--primary)) 0%, transparent 70%)",
+				}}
+			/>
 
 			<Empty className="relative z-10 w-full max-w-2xl border-0 bg-transparent shadow-none">
 				<EmptyHeader className="max-w-md gap-4 mx-auto">
 					<div className="flex size-14 items-center justify-center rounded-2xl border border-border/40 bg-card/60 shadow-md backdrop-blur-xl">
 						<Icon className="size-7 text-primary" aria-hidden="true" />
 					</div>
-					<Badge variant="outline" className="font-mono uppercase tracking-widest bg-background/50 backdrop-blur-md shadow-sm border-border/40 py-1 px-3">
-						<CircleDotDashedIcon className="mr-2 size-3.5 text-primary animate-pulse" aria-hidden="true" />
+					<Badge
+						variant="outline"
+						className="font-mono uppercase tracking-widest bg-background/50 backdrop-blur-md shadow-sm border-border/40 py-1 px-3"
+					>
+						<CircleDotDashedIcon
+							className="mr-2 size-3.5 text-primary animate-pulse"
+							aria-hidden="true"
+						/>
 						{m.coming_status()}
 					</Badge>
 					<EmptyTitle className="text-2xl font-bold tracking-tight text-balance">
@@ -59,21 +69,17 @@ export function ComingSoonPage({ item }: ComingSoonPageProps) {
 				</EmptyHeader>
 
 				<EmptyContent className="mt-8 w-full max-w-[420px] mx-auto">
-					<div className="flex w-full flex-col overflow-hidden rounded-2xl border border-border/40 bg-card/60 shadow-lg backdrop-blur-xl text-left">
-						{/* Terminal Header */}
-						<div className="flex items-center gap-2 border-b border-border/40 bg-muted/20 px-4 py-3">
-							<div className="flex gap-1.5">
-								<div className="size-2.5 rounded-full bg-destructive/80" />
-								<div className="size-2.5 rounded-full bg-amber-500/80" />
-								<div className="size-2.5 rounded-full bg-emerald-500/80" />
-							</div>
-							<CardTitle className="ml-2 font-mono text-[10px] font-medium tracking-widest text-muted-foreground uppercase">
-								build://{item.id}
-							</CardTitle>
-							<Badge variant="secondary" className="ml-auto font-mono text-[9px] bg-primary/10 text-primary border-0 px-2 py-0.5">
-								{m.coming_queued()}
-							</Badge>
-						</div>
+					<ToolWindow className="w-full text-left rounded-2xl shadow-lg backdrop-blur-xl">
+						<ToolWindowHeader title={`build://${item.id}`}>
+							<ToolWindowToolbar>
+								<Badge
+									variant="secondary"
+									className="font-mono text-[9px] bg-primary/10 text-primary border-0 px-2 py-0.5"
+								>
+									{m.coming_queued()}
+								</Badge>
+							</ToolWindowToolbar>
+						</ToolWindowHeader>
 
 						<CardContent className="p-5">
 							<div className="grid grid-cols-[auto_1fr] gap-x-6 gap-y-3 text-sm">
@@ -93,14 +99,19 @@ export function ComingSoonPage({ item }: ComingSoonPageProps) {
 						</CardContent>
 
 						<CardFooter className="border-t border-border/40 bg-muted/10 p-4">
-							<Button asChild variant="ghost" size="sm" className="rounded-full hover:bg-muted/50 w-full">
+							<Button
+								asChild
+								variant="ghost"
+								size="sm"
+								className="rounded-full hover:bg-muted/50 w-full"
+							>
 								<Link to="/">
 									<ArrowLeftIcon className="mr-2 size-3.5" aria-hidden="true" />
 									{m.coming_back_home()}
 								</Link>
 							</Button>
 						</CardFooter>
-					</div>
+					</ToolWindow>
 				</EmptyContent>
 			</Empty>
 		</div>

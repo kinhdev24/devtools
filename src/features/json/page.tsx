@@ -1,12 +1,13 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { ToolWindow, ToolWindowHeader } from "#/components/layout/tool-window";
+import * as m from "#/paraglide/messages.js";
 import { Route } from "#/routes/json";
-import type { JsonMode, JsonStatus } from "./types";
-import { formatJson, minifyJson, parseJson } from "./utils/json";
 import { JsonInput } from "./components/json-input";
 import { JsonOutput } from "./components/json-output";
 import { JsonToolbar } from "./components/json-toolbar";
-import * as m from "#/paraglide/messages.js";
+import type { JsonMode, JsonStatus } from "./types";
+import { formatJson, minifyJson, parseJson } from "./utils/json";
 
 export function JsonPage() {
 	const { input: initialInput } = Route.useSearch();
@@ -19,8 +20,7 @@ export function JsonPage() {
 		if (initialInput) {
 			navigate({ to: "/json", search: {}, replace: true });
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []); // intentionally run once — initialInput is the seed value
+	}, [initialInput, navigate]);
 
 	// Derive status and error from input — pure computation, no state
 	const parseResult = useMemo(() => parseJson(input), [input]);
@@ -78,7 +78,8 @@ export function JsonPage() {
 				{/* Editor Cards */}
 				<div className="flex flex-1 flex-col gap-6 lg:flex-row lg:min-h-[500px]">
 					{/* Input panel */}
-					<div className="flex min-h-[300px] flex-1 flex-col overflow-hidden rounded-xl border border-border/40 bg-card/60 shadow-sm backdrop-blur-sm transition-shadow focus-within:ring-1 focus-within:ring-ring lg:min-h-0">
+					<ToolWindow className="flex-1 lg:min-h-0 min-h-[300px]">
+						<ToolWindowHeader title="editor://json" />
 						<JsonInput
 							value={input}
 							status={status}
@@ -86,12 +87,13 @@ export function JsonPage() {
 							errorColumn={!parseResult.ok ? parseResult.column : undefined}
 							onChange={setInput}
 						/>
-					</div>
+					</ToolWindow>
 
 					{/* Output panel */}
-					<div className="flex min-h-[300px] flex-1 flex-col overflow-hidden rounded-xl border border-border/40 bg-card/60 shadow-sm backdrop-blur-sm transition-shadow focus-within:ring-1 focus-within:ring-ring lg:min-h-0">
+					<ToolWindow className="flex-1 lg:min-h-0 min-h-[300px]">
+						<ToolWindowHeader title="output://json" />
 						<JsonOutput value={output} />
-					</div>
+					</ToolWindow>
 				</div>
 			</div>
 		</div>

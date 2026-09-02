@@ -48,7 +48,10 @@ function CommandDialog({
 				<DialogDescription>{description}</DialogDescription>
 			</DialogHeader>
 			<DialogContent
-				className={cn("overflow-hidden p-0 shadow-2xl sm:max-w-xl rounded-xl border border-border/40 bg-transparent", className)}
+				className={cn(
+					"overflow-hidden p-0 shadow-2xl sm:max-w-xl rounded-xl border border-border/40 bg-transparent",
+					className,
+				)}
 				showCloseButton={false}
 			>
 				<Command className="**:data-[slot=command-input-wrapper]:h-14 [&_[cmdk-group-heading]]:px-3 [&_[cmdk-group-heading]]:font-semibold [&_[cmdk-group-heading]]:text-muted-foreground/70 [&_[cmdk-group-heading]]:uppercase [&_[cmdk-group-heading]]:tracking-wider [&_[cmdk-group-heading]]:text-[10px] [&_[cmdk-group]]:px-2 [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-input-wrapper]_svg]:size-5 [&_[cmdk-input]]:h-14 [&_[cmdk-item]]:px-3 [&_[cmdk-item]]:py-3 [&_[cmdk-item]_svg]:size-4">

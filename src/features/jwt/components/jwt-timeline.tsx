@@ -34,9 +34,15 @@ export function JwtTimeline({ iat, nbf, exp, now }: JwtTimelineProps) {
 			{/* Terminal style header */}
 			<div className="flex items-center gap-2 border-b border-border/40 bg-muted/20 px-4 py-2.5">
 				<div className="flex gap-1.5 opacity-80">
-					<div className={`size-2.5 rounded-full bg-destructive/60 ${isExpired ? 'opacity-100 ring-2 ring-destructive/30' : 'opacity-40 grayscale'}`} />
-					<div className={`size-2.5 rounded-full bg-amber-500/60 ${isNotYetValid ? 'opacity-100 ring-2 ring-amber-500/30' : 'opacity-40 grayscale'}`} />
-					<div className={`size-2.5 rounded-full bg-emerald-500/60 ${!isExpired && !isNotYetValid ? 'opacity-100 ring-2 ring-emerald-500/30' : 'opacity-40 grayscale'}`} />
+					<div
+						className={`size-2.5 rounded-full bg-destructive/60 ${isExpired ? "opacity-100 ring-2 ring-destructive/30" : "opacity-40 grayscale"}`}
+					/>
+					<div
+						className={`size-2.5 rounded-full bg-amber-500/60 ${isNotYetValid ? "opacity-100 ring-2 ring-amber-500/30" : "opacity-40 grayscale"}`}
+					/>
+					<div
+						className={`size-2.5 rounded-full bg-emerald-500/60 ${!isExpired && !isNotYetValid ? "opacity-100 ring-2 ring-emerald-500/30" : "opacity-40 grayscale"}`}
+					/>
 				</div>
 				<span className="ml-2 font-mono text-[10px] font-semibold tracking-wider text-muted-foreground uppercase">
 					{m.jwt_section_timeline()}
@@ -167,7 +173,9 @@ function AnchorLabel({
 
 	return (
 		<div className={`flex flex-col gap-0.5 ${textAlign}`}>
-			<span className={`font-semibold uppercase tracking-wider text-[9px] ${labelClass}`}>
+			<span
+				className={`font-semibold uppercase tracking-wider text-[9px] ${labelClass}`}
+			>
 				{label}
 			</span>
 			<span className="font-mono text-[11px] text-foreground">

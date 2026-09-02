@@ -48,6 +48,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 			<head>
 				<HeadContent />
 				<script
+					// biome-ignore lint/security/noDangerouslySetInnerHtml: theme script
 					dangerouslySetInnerHTML={{
 						__html: `
 							try {

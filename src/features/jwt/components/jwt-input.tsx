@@ -1,5 +1,9 @@
 import { ClipboardIcon, XIcon } from "lucide-react";
 import { useState } from "react";
+import {
+	ToolWindowHeader,
+	ToolWindowToolbar,
+} from "#/components/layout/tool-window";
 import { Button } from "#/components/ui/button";
 import * as m from "#/paraglide/messages.js";
 
@@ -31,20 +35,10 @@ export function JwtInput({ value, onChange, onClear }: JwtInputProps) {
 
 	return (
 		<div className="flex flex-col">
-			{/* macOS / Terminal style header */}
-			<div className="flex items-center gap-2 border-b border-border/40 bg-muted/20 px-4 py-2.5">
-				<div className="flex gap-1.5 opacity-80">
-					<div className="size-2.5 rounded-full bg-destructive/60" />
-					<div className="size-2.5 rounded-full bg-amber-500/60" />
-					<div className="size-2.5 rounded-full bg-emerald-500/60" />
-				</div>
-				<span className="ml-2 font-mono text-[10px] font-semibold tracking-wider text-muted-foreground uppercase">
-					{m.jwt_input_label()}
-				</span>
-				
+			<ToolWindowHeader title={m.jwt_input_label()}>
 				{/* Action buttons */}
 				{value && (
-					<div className="ml-auto flex items-center gap-1">
+					<ToolWindowToolbar>
 						<Button
 							id="jwt-copy-btn"
 							size="icon-xs"
@@ -65,9 +59,9 @@ export function JwtInput({ value, onChange, onClear }: JwtInputProps) {
 						>
 							<XIcon className="size-3.5" aria-hidden="true" />
 						</Button>
-					</div>
+					</ToolWindowToolbar>
 				)}
-			</div>
+			</ToolWindowHeader>
 
 			{/* Textarea */}
 			<div className="relative bg-transparent">
@@ -108,7 +102,9 @@ export function JwtInput({ value, onChange, onClear }: JwtInputProps) {
 					</p>
 					{hasThreeParts && (
 						<div className="mt-2 flex gap-4 text-[10px] font-semibold tracking-wide text-muted-foreground uppercase">
-							<span className="text-blue-500/80 dark:text-blue-400/80">header</span>
+							<span className="text-blue-500/80 dark:text-blue-400/80">
+								header
+							</span>
 							<span className="text-emerald-600/80 dark:text-emerald-400/80">
 								payload
 							</span>

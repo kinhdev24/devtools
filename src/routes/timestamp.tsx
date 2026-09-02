@@ -1,11 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { toolsById } from "#/config/tools";
-import { ComingSoonPage } from "#/features/coming-soon/page";
+import { z } from "zod";
+import { TimestampPage } from "#/features/timestamp/page";
 
-export const Route = createFileRoute("/timestamp")({
-	component: TimestampPage,
+const timestampSearchSchema = z.object({
+	value: z.union([z.string(), z.number()]).transform(String).optional(),
 });
 
-function TimestampPage() {
-	return <ComingSoonPage item={toolsById.timestamp} />;
-}
+export const Route = createFileRoute("/timestamp")({
+	validateSearch: (search) => timestampSearchSchema.parse(search),
+	component: TimestampPage,
+});

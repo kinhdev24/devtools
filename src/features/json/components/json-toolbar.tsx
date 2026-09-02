@@ -1,9 +1,15 @@
-import { CheckIcon, ClipboardIcon, EraserIcon, WrapTextIcon, BracesIcon } from "lucide-react";
+import {
+	BracesIcon,
+	CheckIcon,
+	ClipboardIcon,
+	EraserIcon,
+	WrapTextIcon,
+} from "lucide-react";
 import { useCallback, useState } from "react";
 
 import { Button } from "#/components/ui/button";
 import * as m from "#/paraglide/messages.js";
-import type { JsonStatus, JsonMode } from "../types";
+import type { JsonMode, JsonStatus } from "../types";
 
 type JsonToolbarProps = {
 	status: JsonStatus;
@@ -88,7 +94,10 @@ export function JsonToolbar({
 						className="h-7 rounded-full text-xs font-medium transition-transform hover:scale-105 active:scale-95"
 					>
 						{copied ? (
-							<CheckIcon className="size-3.5 text-emerald-500" aria-hidden="true" />
+							<CheckIcon
+								className="size-3.5 text-emerald-500"
+								aria-hidden="true"
+							/>
 						) : (
 							<ClipboardIcon className="size-3.5" aria-hidden="true" />
 						)}

@@ -1,10 +1,6 @@
 import { Link } from "@tanstack/react-router";
-import {
-	MenuIcon,
-	SearchIcon,
-	SquareTerminalIcon,
-} from "lucide-react";
-
+import { MenuIcon, SearchIcon, SquareTerminalIcon } from "lucide-react";
+import { GithubIcon } from "#/components/icons/github";
 import {
 	CommandPalette,
 	useCommandPalette,
@@ -12,7 +8,6 @@ import {
 import { LanguageSwitcher } from "#/components/layout/language-switcher";
 import { Sidebar } from "#/components/layout/sidebar";
 import { ThemeToggle } from "#/components/layout/theme-toggle";
-import { GithubIcon } from "#/components/icons/github";
 import { Button } from "#/components/ui/button";
 import {
 	Sheet,
@@ -77,7 +72,9 @@ export function TopNav() {
 					onClick={() => setCommandOpen(true)}
 				>
 					<SearchIcon className="size-3.5 mr-1" />
-					<span className="truncate text-xs font-medium">{m.command_search()}</span>
+					<span className="truncate text-xs font-medium">
+						{m.command_search()}
+					</span>
 					<kbd className="ml-auto hidden rounded-full border border-border/40 bg-background/50 px-2 py-0.5 font-mono text-[10px] font-medium sm:inline">
 						⌘K
 					</kbd>
@@ -101,7 +98,11 @@ export function TopNav() {
 						<div className="h-4 w-px bg-border/40" />
 						<Tooltip>
 							<TooltipTrigger asChild>
-								<Button variant="ghost" className="rounded-full hover:bg-muted/50 h-8 w-8 sm:h-7 sm:w-auto sm:px-2.5 px-0 text-muted-foreground hover:text-foreground" asChild>
+								<Button
+									variant="ghost"
+									className="rounded-full hover:bg-muted/50 h-8 w-8 sm:h-7 sm:w-auto sm:px-2.5 px-0 text-muted-foreground hover:text-foreground"
+									asChild
+								>
 									<a
 										href="https://github.com/kinhdev24/devtools"
 										target="_blank"
@@ -109,7 +110,9 @@ export function TopNav() {
 										aria-label={m.nav_github()}
 									>
 										<GithubIcon className="size-4 sm:size-3.5 sm:mr-1.5" />
-										<span className="hidden sm:inline text-[11px] font-semibold tracking-wide">Star</span>
+										<span className="hidden sm:inline text-[11px] font-semibold tracking-wide">
+											Star
+										</span>
 									</a>
 								</Button>
 							</TooltipTrigger>
