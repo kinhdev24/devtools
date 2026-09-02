@@ -5,6 +5,7 @@ import {
 	SparklesIcon,
 } from "lucide-react";
 import { type DragEvent, useId, useMemo, useState } from "react";
+import { Link } from "@tanstack/react-router";
 
 import { Button } from "#/components/ui/button";
 import { Textarea } from "#/components/ui/textarea";
@@ -90,12 +91,19 @@ export function HomePage() {
 									</span>
 								</span>
 								<Button size="xs" asChild>
-									<a href={detectedTool.path}>
+									<Link
+										to={detectedTool.path as "/json"}
+										search={
+											detectedTool.id === "json"
+												? { input: value }
+												: {}
+										}
+									>
 										{m.home_open_tool({
 											tool: getToolName(detectedTool.nameKey),
 										})}
 										<ArrowRightIcon data-icon="inline-end" />
-									</a>
+									</Link>
 								</Button>
 							</>
 						) : (

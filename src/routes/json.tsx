@@ -1,9 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { toolsById } from "#/config/tools";
-import { ComingSoonPage } from "#/features/coming-soon/page";
+import { z } from "zod";
+import { JsonPage } from "#/features/json/page";
 
-export const Route = createFileRoute("/json")({ component: JsonPage });
+const jsonSearchSchema = z.object({
+	input: z.string().optional(),
+});
 
-function JsonPage() {
-	return <ComingSoonPage item={toolsById.json} />;
-}
+export const Route = createFileRoute("/json")({
+	validateSearch: (search) => jsonSearchSchema.parse(search),
+	component: JsonPage,
+});

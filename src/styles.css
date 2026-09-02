@@ -30,6 +30,12 @@
   --ring: oklch(0.58 0.11 255);
   --sidebar: oklch(0.97 0.005 247);
   --sidebar-foreground: var(--foreground);
+
+  /* JSON Studio syntax highlight tokens */
+  --json-key:     oklch(0.47 0.13 255);  /* blue-ish */
+  --json-string:  oklch(0.52 0.14 148);  /* green */
+  --json-number:  oklch(0.56 0.18 32);   /* amber */
+  --json-keyword: oklch(0.58 0.17 310);  /* violet — true/false/null */
 }
 
 .dark {
@@ -53,6 +59,12 @@
   --ring: oklch(0.66 0.1 255);
   --sidebar: oklch(0.16 0.013 258);
   --sidebar-foreground: var(--foreground);
+
+  /* JSON Studio syntax highlight tokens (dark) */
+  --json-key:     oklch(0.68 0.16 255);
+  --json-string:  oklch(0.72 0.17 148);
+  --json-number:  oklch(0.76 0.17 55);
+  --json-keyword: oklch(0.72 0.18 310);
 }
 
 @theme inline {
