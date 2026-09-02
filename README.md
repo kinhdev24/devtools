@@ -1,209 +1,94 @@
-Welcome to your new TanStack Start app!
+# 🛠 DevTools
 
-# Getting Started
+> A premium, local-first developer tools application built with modern web technologies.
 
-To run this application:
+DevTools provides a suite of essential utilities for developers, with a strong focus on privacy, speed, and aesthetics. Everything runs locally in your browser whenever possible—meaning your sensitive data (like JWTs or JSON payloads) never leaves your machine unless explicitly required.
 
+## ✨ Features
+
+- **🔒 Local-First Architecture**: Most tools process data entirely within the browser using Web Workers and native APIs.
+- **🎨 Premium UI/UX**: Designed with a "floating card" aesthetic, glassmorphism (`backdrop-blur`), and responsive layouts.
+- **🌗 Dark Mode Ready**: Seamless light/dark theme switching with system preference detection.
+- **🌐 Internationalization (i18n)**: Full support for English (`en`) and Vietnamese (`vi`).
+- **⌨️ Keyboard Centric**: Powerful Command Palette (`⌘K`) for quick navigation and tool execution.
+
+## 🧰 Available Tools
+
+### Developer
+- **JSON Studio**: Advanced JSON formatter, validator, and viewer with syntax highlighting.
+- **JWT Decoder**: Decode, inspect, and verify JSON Web Tokens (supports HMAC signature verification).
+- **Timestamp**: UNIX timestamp converter *(Coming Soon)*.
+- **Regex Tester**: Regular expression tester and visualizer *(Coming Soon)*.
+
+### Media
+- **Image Studio**: Local image compression, format conversion, and EXIF viewer *(Coming Soon)*.
+- **Audio Studio**: Audio metadata inspector and converter *(Coming Soon)*.
+
+### Vietnam Specific
+- **Vietnamese Text**: Utility for handling Vietnamese character conversions and formatting *(Coming Soon)*.
+- **Money Reader**: Convert numbers to Vietnamese currency text *(Coming Soon)*.
+
+## 🚀 Tech Stack
+
+- **Framework**: [TanStack Start](https://tanstack.com/start) + [React 19](https://react.dev/)
+- **Routing**: [TanStack Router](https://tanstack.com/router)
+- **Styling**: [Tailwind CSS v4](https://tailwindcss.com/) + [shadcn/ui](https://ui.shadcn.com/)
+- **Language**: [TypeScript](https://www.typescriptlang.org/)
+- **i18n**: [Paraglide JS](https://inlang.com/m/gerre34r/library-inlang-paraglideJs)
+- **Linting & Formatting**: [Biome](https://biomejs.dev/)
+
+## 📦 Getting Started
+
+### Prerequisites
+- Node.js (v20+)
+- `yarn` or `npm` or `pnpm`
+
+### Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/kinhdev24/devtools.git
+   cd devtools
+   ```
+
+2. Install dependencies:
+   ```bash
+   yarn install
+   ```
+
+3. Start the development server:
+   ```bash
+   yarn dev
+   ```
+   The application will be available at `http://localhost:3000`.
+
+### Production Build
+
+To build the application for production:
 ```bash
-npm install
-npm run dev
+yarn build
 ```
 
-# Building For Production
+## 🏗 Architecture & Guidelines
 
-To build this application for production:
+This project strictly follows a **Feature-First Architecture**.
+Code is grouped by feature rather than by type (e.g., `src/features/jwt/` instead of globally scattering components, hooks, and utilities).
 
-```bash
-npm run build
-```
+For detailed documentation, please refer to the following:
+- 📖 [AGENTS.md](./AGENTS.md): The core rulebook and entry point for AI/Developer context.
+- 🏗 [Architecture Overview](./docs/architecture/overview.md)
+- 💅 [Design Principles](./docs/design/principles.md)
 
-## Styling
+### Key Rules
+- **English First**: Code, routes, file names, and identifiers MUST use English. Only user-facing text is localized.
+- **Local-First**: Never send user input to the server if the browser can process it safely.
+- **Server Functions**: Used strictly for database access, secrets, private APIs, or privileged operations.
 
-This project uses [Tailwind CSS](https://tailwindcss.com/) for styling.
+## 🤝 Contributing
 
-### Removing Tailwind CSS
+1. Review `AGENTS.md` before writing code to understand the architectural boundaries and style guidelines.
+2. Ensure you run `yarn check` (Biome) to validate formatting and linting.
+3. Keep feature UI, state, hooks, and business logic tightly cohesive inside `src/features/<feature-name>/`.
 
-If you prefer not to use Tailwind CSS:
-
-1. Remove the demo pages in `src/routes/demo/`
-2. Replace the Tailwind import in `src/styles.css` with your own styles
-3. Remove `tailwindcss()` from the plugins array in `vite.config.ts`
-4. Remove `@tailwindcss/vite` and `tailwindcss` from `package.json`
-
-## Linting & Formatting
-
-This project uses [Biome](https://biomejs.dev/) for linting and formatting. The following scripts are available:
-
-
-```bash
-npm run lint
-npm run format
-npm run check
-```
-
-
-## Deploy to Vercel
-
-1. Push this repo to GitHub, GitLab, or Bitbucket
-2. In Vercel, choose **Add New > Project** and import the repo
-3. Keep the detected TanStack Start framework settings
-4. Add production values from `.env.example` under **Settings > Environment Variables**
-5. Deploy
-
-Vercel runs the build script and deploys Nitro's output as Vercel Functions and
-static assets. The included `vercel.json` makes framework detection explicit.
-
-Variables prefixed with `VITE_` are included in the browser bundle. Keep secrets
-unprefixed so they remain server-only.
-
-
-
-## Routing
-
-This project uses [TanStack Router](https://tanstack.com/router) with file-based routing. Routes are managed as files in `src/routes`.
-
-### Adding A Route
-
-To add a new route to your application just add a new file in the `./src/routes` directory.
-
-TanStack will automatically generate the content of the route file for you.
-
-Now that you have two routes you can use a `Link` component to navigate between them.
-
-### Adding Links
-
-To use SPA (Single Page Application) navigation you will need to import the `Link` component from `@tanstack/react-router`.
-
-```tsx
-import { Link } from "@tanstack/react-router";
-```
-
-Then anywhere in your JSX you can use it like so:
-
-```tsx
-<Link to="/about">About</Link>
-```
-
-This will create a link that will navigate to the `/about` route.
-
-More information on the `Link` component can be found in the [Link documentation](https://tanstack.com/router/v1/docs/framework/react/api/router/linkComponent).
-
-### Using A Layout
-
-In the File Based Routing setup the layout is located in `src/routes/__root.tsx`. Anything you add to the root route will appear in all the routes. The route content will appear in the JSX where you render `{children}` in the `shellComponent`.
-
-Here is an example layout that includes a header:
-
-```tsx
-import { HeadContent, Scripts, createRootRoute } from '@tanstack/react-router'
-
-export const Route = createRootRoute({
-  head: () => ({
-    meta: [
-      { charSet: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { title: 'My App' },
-    ],
-  }),
-  shellComponent: ({ children }) => (
-    <html lang="en">
-      <head>
-        <HeadContent />
-      </head>
-      <body>
-        <header>
-          <nav>
-            <Link to="/">Home</Link>
-            <Link to="/about">About</Link>
-          </nav>
-        </header>
-        {children}
-        <Scripts />
-      </body>
-    </html>
-  ),
-})
-```
-
-More information on layouts can be found in the [Layouts documentation](https://tanstack.com/router/latest/docs/framework/react/guide/routing-concepts#layouts).
-
-## Server Functions
-
-TanStack Start provides server functions that allow you to write server-side code that seamlessly integrates with your client components.
-
-```tsx
-import { createServerFn } from '@tanstack/react-start'
-
-const getServerTime = createServerFn({
-  method: 'GET',
-}).handler(async () => {
-  return new Date().toISOString()
-})
-
-// Use in a component
-function MyComponent() {
-  const [time, setTime] = useState('')
-  
-  useEffect(() => {
-    getServerTime().then(setTime)
-  }, [])
-  
-  return <div>Server time: {time}</div>
-}
-```
-
-## API Routes
-
-You can create API routes by using the `server` property in your route definitions:
-
-```tsx
-import { createFileRoute } from '@tanstack/react-router'
-import { json } from '@tanstack/react-start'
-
-export const Route = createFileRoute('/api/hello')({
-  server: {
-    handlers: {
-      GET: () => json({ message: 'Hello, World!' }),
-    },
-  },
-})
-```
-
-## Data Fetching
-
-There are multiple ways to fetch data in your application. You can use TanStack Query to fetch data from a server. But you can also use the `loader` functionality built into TanStack Router to load the data for a route before it's rendered.
-
-For example:
-
-```tsx
-import { createFileRoute } from '@tanstack/react-router'
-
-export const Route = createFileRoute('/people')({
-  loader: async () => {
-    const response = await fetch('https://swapi.dev/api/people')
-    return response.json()
-  },
-  component: PeopleComponent,
-})
-
-function PeopleComponent() {
-  const data = Route.useLoaderData()
-  return (
-    <ul>
-      {data.results.map((person) => (
-        <li key={person.name}>{person.name}</li>
-      ))}
-    </ul>
-  )
-}
-```
-
-Loaders simplify your data fetching logic dramatically. Check out more information in the [Loader documentation](https://tanstack.com/router/latest/docs/framework/react/guide/data-loading#loader-parameters).
-
-
-
-# Learn More
-
-You can learn more about all of the offerings from TanStack in the [TanStack documentation](https://tanstack.com).
-
-For TanStack Start specific documentation, visit [TanStack Start](https://tanstack.com/start).
+---
+*Built with ❤️ for developers.*
