@@ -6,9 +6,10 @@ type JwtTimelineProps = {
 	nbf?: number;
 	exp?: number;
 	now: number;
+	locale: string;
 };
 
-export function JwtTimeline({ iat, nbf, exp, now }: JwtTimelineProps) {
+export function JwtTimeline({ iat, nbf, exp, now, locale }: JwtTimelineProps) {
 	if (!iat && !exp) return null;
 
 	const start = iat ?? now - 300;
@@ -87,6 +88,7 @@ export function JwtTimeline({ iat, nbf, exp, now }: JwtTimelineProps) {
 							label={m.jwt_timeline_issued()}
 							ts={iat}
 							now={now}
+							locale={locale}
 							align="left"
 							color="muted"
 						/>
@@ -96,6 +98,7 @@ export function JwtTimeline({ iat, nbf, exp, now }: JwtTimelineProps) {
 							label={m.jwt_timeline_expires()}
 							ts={exp}
 							now={now}
+							locale={locale}
 							align="right"
 							color={isExpired ? "destructive" : "muted"}
 						/>
@@ -158,12 +161,14 @@ function AnchorLabel({
 	label,
 	ts,
 	now,
+	locale,
 	align,
 	color,
 }: {
 	label: string;
 	ts: number;
 	now: number;
+	locale: string;
 	align: "left" | "right";
 	color: "muted" | "destructive";
 }) {
@@ -179,10 +184,10 @@ function AnchorLabel({
 				{label}
 			</span>
 			<span className="font-mono text-[11px] text-foreground">
-				{formatTimestamp(ts)}
+				{formatTimestamp(ts, locale)}
 			</span>
 			<span className={`text-[10px] ${labelClass}`}>
-				{formatRelative(ts, now)}
+				{now ? formatRelative(ts, now, locale) : "—"}
 			</span>
 		</div>
 	);

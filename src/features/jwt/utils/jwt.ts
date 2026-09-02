@@ -126,10 +126,11 @@ export async function verifyHmac(
 // ---------------------------------------------------------------------------
 
 /** Format a Unix timestamp as a readable local datetime string. */
-export function formatTimestamp(unix: number): string {
-	return new Intl.DateTimeFormat(undefined, {
+export function formatTimestamp(unix: number, locale: string): string {
+	return new Intl.DateTimeFormat(locale, {
 		dateStyle: "medium",
 		timeStyle: "short",
+		timeZone: "UTC",
 	}).format(new Date(unix * 1000));
 }
 
@@ -137,7 +138,11 @@ export function formatTimestamp(unix: number): string {
  * Format the difference between a Unix timestamp and now as a relative string.
  * e.g. "in 2 hours", "3 days ago"
  */
-export function formatRelative(unix: number, nowSec: number): string {
+export function formatRelative(
+	unix: number,
+	nowSec: number,
+	locale: string,
+): string {
 	const diffSec = unix - nowSec;
 	const sign = diffSec >= 0 ? 1 : -1;
 	const abs = Math.abs(diffSec);
@@ -152,7 +157,7 @@ export function formatRelative(unix: number, nowSec: number): string {
 	for (const [secs, unit] of units) {
 		if (abs >= secs || unit === "second") {
 			const count = Math.floor(abs / secs) * sign;
-			return new Intl.RelativeTimeFormat(undefined, { numeric: "auto" }).format(
+			return new Intl.RelativeTimeFormat(locale, { numeric: "auto" }).format(
 				count,
 				unit,
 			);

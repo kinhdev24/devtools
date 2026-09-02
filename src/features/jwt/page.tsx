@@ -2,6 +2,7 @@ import { useNavigate } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import { ToolWindow } from "#/components/layout/tool-window";
 import * as m from "#/paraglide/messages.js";
+import { getLocale } from "#/paraglide/runtime.js";
 import { Route } from "#/routes/jwt";
 import { JwtDecoded } from "./components/jwt-decoded";
 import { JwtInput } from "./components/jwt-input";
@@ -13,8 +14,9 @@ import { decodeJwt, getTokenStatus } from "./utils/jwt";
 export function JwtPage() {
 	const { token: initialToken } = Route.useSearch();
 	const navigate = useNavigate();
+	const locale = getLocale();
 	const [token, setToken] = useState(initialToken ?? "");
-	const [now, setNow] = useState(() => Math.floor(Date.now() / 1000));
+	const [now, setNow] = useState(0);
 
 	// Consume ?token= param and clean URL
 	useEffect(() => {
@@ -37,6 +39,7 @@ export function JwtPage() {
 
 	useEffect(() => {
 		if (!hasTimeClaims) return;
+		setNow(Math.floor(Date.now() / 1000));
 		const id = setInterval(() => setNow(Math.floor(Date.now() / 1000)), 1000);
 		return () => clearInterval(id);
 	}, [hasTimeClaims]);
@@ -91,6 +94,7 @@ export function JwtPage() {
 							header={decodeResult.parts.header}
 							payload={decodeResult.parts.payload}
 							now={now}
+							locale={locale}
 						/>
 
 						{(typeof decodeResult.parts.payload.iat === "number" ||
@@ -112,6 +116,7 @@ export function JwtPage() {
 										: undefined
 								}
 								now={now}
+								locale={locale}
 							/>
 						)}
 

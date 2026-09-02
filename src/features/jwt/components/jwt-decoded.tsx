@@ -27,21 +27,24 @@ type JwtDecodedProps = {
 	header: Record<string, unknown>;
 	payload: Record<string, unknown>;
 	now: number;
+	locale: string;
 };
 
-export function JwtDecoded({ header, payload, now }: JwtDecodedProps) {
+export function JwtDecoded({ header, payload, now, locale }: JwtDecodedProps) {
 	return (
 		<div className="grid gap-3 sm:grid-cols-[1fr_1.6fr]">
 			<ClaimsSection
 				title={m.jwt_section_header()}
 				claims={header}
 				now={now}
+				locale={locale}
 				showAnnotations={false}
 			/>
 			<ClaimsSection
 				title={m.jwt_section_payload()}
 				claims={payload}
 				now={now}
+				locale={locale}
 				showAnnotations
 			/>
 		</div>
@@ -56,11 +59,13 @@ function ClaimsSection({
 	title,
 	claims,
 	now,
+	locale,
 	showAnnotations,
 }: {
 	title: string;
 	claims: Record<string, unknown>;
 	now: number;
+	locale: string;
 	showAnnotations: boolean;
 }) {
 	const entries = Object.entries(claims);
@@ -88,6 +93,7 @@ function ClaimsSection({
 							claimKey={key}
 							value={value}
 							now={now}
+							locale={locale}
 							showAnnotation={showAnnotations}
 						/>
 					))
@@ -105,11 +111,13 @@ function ClaimRow({
 	claimKey,
 	value,
 	now,
+	locale,
 	showAnnotation,
 }: {
 	claimKey: string;
 	value: unknown;
 	now: number;
+	locale: string;
 	showAnnotation: boolean;
 }) {
 	const [copied, setCopied] = useState(false);
@@ -118,7 +126,7 @@ function ClaimRow({
 		TIMESTAMP_CLAIMS.has(claimKey) && typeof value === "number";
 
 	const displayValue = isTimestamp
-		? formatTimestamp(value as number)
+		? formatTimestamp(value as number, locale)
 		: formatClaimValue(value);
 
 	const copyValue = isTimestamp
@@ -148,7 +156,7 @@ function ClaimRow({
 					{/* Meta / Annotation */}
 					{isTimestamp && (
 						<span className="flex items-center gap-1 rounded bg-muted/50 px-1.5 py-0.5 font-mono text-[9px] text-muted-foreground uppercase tracking-wide">
-							{formatRelative(value as number, now)}
+							{now ? formatRelative(value as number, now, locale) : "—"}
 						</span>
 					)}
 					{annotation && !isTimestamp && (
